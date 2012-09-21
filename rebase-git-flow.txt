@@ -171,4 +171,5 @@ _Only_ merge QA'd/authorised staging branches to master
 
 Disclaimer
 ----------
-This model is _not_ used and you should only try it if your a rebaser or want to experiment :)
+ - This model is _not_ used and you should only try it if your a rebaser or want to experiment :)
+ - Only feasible for small private projects
