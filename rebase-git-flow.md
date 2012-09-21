@@ -1,0 +1,174 @@
+Rebasing Git Flow
+-----------------
+
+Branch off master, merge to master 'ish
+
+* = commit
+*' = rebased/amended commit (copy)
+
+Basic Example
+-------------
+
+   * feature-x       * feature-y
+   *                 *
+   *                 *
+   *                 *
+   *                 *
+  /                 /
+ * master
+
+Creating a staging branch
+-------------------------
+
+`git checkout master`
+`git checkout -b stage-1`
+`git checkout feature-x`
+`git checkout -b stage-1-feature-x`
+`git rebase stage-1`
+`git checkout stage-1`
+`git merge stage-1-feature-x --no-ff`
+
+Note: since feature-x is already on latest master, stage-1-feature-x and feature-x will be on the same commit
+
+   * stage-1 - Merge branch 'stage-1-feature-x' into stage-1
+   |  \
+   |   * feature-x stage-1-feature-x       * feature-y
+   |   *                                   *
+   |   *                                   *
+   |   *                                   *
+   |   *                                   *
+  /   /                                   /
+ * master
+
+Staging feature-y with feature-x
+--------------------------------
+
+`git checkout feature-y`
+`git checkout -b stage-1-feature-y`
+`git rebase stage-1`
+`git checkout stage-1`
+`git merge stage-1-feature-y --no-ff`
+
+   * stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+   |  \
+   |   *' stage-1-feature-y
+   |   *'
+   |   *'
+   |   *'
+   |   *'
+   |  /
+   * Merge branch 'stage-1-feature-x' into stage-1
+   |  \
+   |   * feature-x stage-1-feature-x       * feature-y
+   |   *                                   *
+   |   *                                   *
+   |   *                                   *
+   |   *                                   *
+  /   /                                   /
+ * master
+
+Stage passed QA. Fastforward merge to master
+--------------------------------------------
+
+`git checkout master`
+`git merge stage-1`
+
+ * master stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+ |  \
+ |   *' stage-1-feature-y
+ |   *'
+ |   *'
+ |   *'
+ |   *'
+ |  /
+ * Merge branch 'stage-1-feature-x' into stage-1
+ |  \
+ |   * feature-x stage-1-feature-x       * feature-y
+ |   *                                   *
+ |   *                                   *
+ |   *                                   *
+ |   *                                   *
+    /                                   /
+ *
+
+Cleanup feature branches
+------------------------
+
+`git checkout master`
+`git branch -d feature-x`
+`git branch -D feature-y` (feature-y is not within branch master so have to use -D. However stage-1-feature-y is in master)
+`git branch -d stage-1-feature-x`
+`git branch -d stage-1-feature-y`
+
+ * master stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+ |  \
+ |   *' 
+ |   *'
+ |   *'
+ |   *'
+ |   *'
+ |  /
+ * Merge branch 'stage-1-feature-x' into stage-1
+ |  \
+ |   *
+ |   *
+ |   *
+ |   *
+ |   *
+    /
+ *
+
+Advantages
+----------
+ - Feature branches self-contained
+ - Pretty/_sane_ history
+ - Want to deploy feature-x before the sprint ends? create a new stage branch, rebase/merge, merge master. Feature-x already in old staging branch? recreate it! (or rebase)
+
+Disadvantages
+-------------
+ - Use of rebase (most people will discourage this)
+ - Git beginners might get confused
+ - If you build feature branches and want to keep that history, history will be messy (see above whilst feature-y co-existed with stage-1-feature-y)
+ - No clue how pull requests will behave with rewritten history
+
+Special circumstances
+---------------------
+You've got stage-1 which contains feature-y, feature-x and feature-z. However you need to deploy feature-x ASAP. You'd create stage-2 and rebase/merge feature-x within stage-2 and then fast-forward merge master.
+
+However, feature-y and feature-z was branched off old version of master. We must rebase.
+Also stage-1 is branched off old version of mater. We must rebase.
+
+Clean way to do this (as rebase ignores merge commits) is to:
+
+`git branch -D stage-1`
+`git checkout feature-y`
+`git rebase master`
+`git checkout feature-z`
+`git rebase master`
+
+`git checkout master`
+`git checkout -b stage-1`
+`git checkout stage-1-feature-y`
+`git rebase stage-1`
+`git checkout stage-1`
+`git merge stage-1-feature-y --no-ff`
+`git checkout stage-1-feature-x`
+`git rebase stage-1`
+`git checkout stage-1`
+`git merge stage-1-feature-x --no-ff`
+
+Now we've got stage-1 up to date with master and all features not merged into master is up to date with master.
+
+(Diagrams to follow in near future)
+
+Note
+----
+_Do not_ work off master branch.
+_Do not_ work off staging branches.
+_Always_ work off feature branches, not staged feature branches.
+_Always_ rebase to the branch you want to merge to (`git checkout -b stage-1-feature-x` `git rebase stage-1` `git checkout stage-1` `git merge stage-1-feature-x --no-ff`)
+_Only_ merge QA'd/authorised staging branches to master
+
+Disclaimer
+----------
+This model is _not_ used and you should only try it if your a rebaser or want to experiment :)
