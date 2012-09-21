@@ -28,7 +28,7 @@ Creating a staging branch
 `git checkout stage-1`
 `git merge stage-1-feature-x --no-ff`
 
-Note: since feature-x is already on latest master, stage-1-feature-x and feature-x will be on the same commit
+Note: since feature-x is already on latest master, stage-1-feature-x and feature-x will be on the same commit (fast-forward)
 
    * stage-1 - Merge branch 'stage-1-feature-x' into stage-1
    |  \
