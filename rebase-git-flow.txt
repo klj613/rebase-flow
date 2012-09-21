@@ -95,12 +95,13 @@ Cleanup feature branches
 ------------------------
 
 `git checkout master`
+`git branch -d stage-1`
 `git branch -d feature-x`
 `git branch -D feature-y` (feature-y is not within branch master so have to use -D. However stage-1-feature-y is in master)
 `git branch -d stage-1-feature-x`
 `git branch -d stage-1-feature-y`
 
- * master stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+ * master - Merge branch 'stage-1-feature-y' into stage-1
  |  \
  |   *' 
  |   *'
