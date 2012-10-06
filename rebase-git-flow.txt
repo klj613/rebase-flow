@@ -1,6 +1,24 @@
 Rebasing Git Flow
 -----------------
 
+TL;DR
+-----
+
+All feature branches are rebased to latest master
+All staging branches are rebased to latest master
+All finalized feature branches are rebased then --no-ff merged into a staging branch
+All staging branches gets signed off and tested before --no-ff into master
+Remove all history of staging branches (primary merge commit messages)
+
+All feature branches prefixed by an author name is only to be used by the author.
+
+If any feature-branches rely heavily on each other then they are actually sub-feature-branches of the same feature-branch.
+If any feature-branches rely lightly on each other then you can use `git cherry-pick` to pick up specific commits (e.g. something small) from another branch.
+
+
+Intro
+-----
+
 Branch off master, merge to master 'ish
 
 * = commit
@@ -212,4 +230,4 @@ create stage-1 then stage-2 then stage-2 gets merged in before stage-1 and stage
 
 Disclaimer
 ----------
- - This model is untested and still not finalized
+ - This model is untested and still not finalized.
