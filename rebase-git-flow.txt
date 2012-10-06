@@ -168,8 +168,14 @@ _Do not_ work off master branch.
 _Do not_ work off staging branches.
 _Always_ work off feature branches, not staged feature branches.
 _Always_ rebase to the branch you want to merge to (`git checkout -b stage-1-feature-x` `git rebase stage-1` `git checkout stage-1` `git merge stage-1-feature-x --no-ff`)
-_Only_ merge QA'd/authorised staging branches to master
+_Only_ merge QA'd/authorised staging branches to master.
+
+_Stage branches_ can be re-created (or reset).
+Once a stage branch is merged into master then the _feature branches_ are immutable (finalized) and the original feature branches (non-rebased) should be 
+removed as shown above.
+
+Feature branches prefixed with author name should be not be touched by anyone except the author as they wish to change the history as they please.
 
 Disclaimer
 ----------
- - This model is _not_ used and you should only try it if your a rebaser or want to experiment :)
+ - This model is untested and still not finalized
