@@ -119,6 +119,29 @@ Cleanup feature branches
  |  /
  *
 
+Cleanup feature branches - Correct merge messages
+-------------------------------------------------
+
+Use rebase, or use manual commit messages earlier in the merging process.
+
+ * master - Merge branch 'feature-y' into master
+ |  \
+ |   *' 
+ |   *'
+ |   *' [solved conflict here]
+ |   *'
+ |   *'
+ |  /
+ * Merge branch 'feature-x' into master
+ |  \
+ |   *
+ |   *
+ |   *
+ |   *
+ |   *
+ |  /
+ *
+
 Advantages
 ----------
  - Feature branches self-contained
