@@ -150,7 +150,7 @@ Disadvantages
  - Use of rebase (most people will discourage this)
  - Git beginners might get confused
  - If you build feature branches and want to keep that history, history will be messy (see above whilst feature-y co-existed with stage-1-feature-y)
- - No clue how pull requests will behave with rewritten history (however you wouldn't use a PR since you be rebasing)
+ - Pull Requests will get 'outdated diffs' messages. However PR's should only happen on a stage branch when it is ready to be merged into master or on a staged feature branch ready to be merged into a stage branch. Please don't use automatic merging! Merge it yourself with custom message.
 
 Special circumstances
 ---------------------
