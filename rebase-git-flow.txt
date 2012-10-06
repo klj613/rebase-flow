@@ -1,30 +1,18 @@
 Rebasing Git Flow
------------------
+=================
 
 TL;DR
 -----
 
-All feature branches are rebased to latest master
-All staging branches are rebased to latest master
-All finalized feature branches are rebased then --no-ff merged into a staging branch
-All staging branches gets signed off and tested before --no-ff into master
-Remove all history of staging branches (primary merge commit messages)
-
-All feature branches prefixed by an author name is only to be used by the author.
-
-If any feature-branches rely heavily on each other then they are actually sub-feature-branches of the same feature-branch.
-If any feature-branches rely lightly on each other then you can use `git cherry-pick` to pick up specific commits (e.g. something small) from another branch.
-
-Once a staging branch is merged into master, all the branches for the features introduced in the that stage branch should be removed.
-
-
-Intro
------
-
-Branch off master, merge to master 'ish
-
-* = commit
-*' = rebased/amended commit (copy)
+ - All feature branches are rebased to latest master
+ - All staging branches are rebased to latest master
+ - All finalized feature branches are rebased then --no-ff merged into a staging branch
+ - All staging branches gets signed off and tested before --no-ff into master
+ - Remove all history of staging branches
+ - All feature branches prefixed by an author name is only to be used by the author.
+ - If any feature-branches rely heavily on each other then they are actually sub-feature-branches of the same feature-branch.
+ - If any feature-branches rely lightly on each other then you can use `git cherry-pick` to pick up specific commits (e.g. something small) from another branch.
+ - Once a staging branch is merged into master, all the branches for the features introduced in the that stage branch should be removed.
 
 Basic Example
 -------------
@@ -184,27 +172,27 @@ Now we've got stage-1 up to date with master and all features not merged into ma
 
 Note
 ----
-_Do not_ work off master branch.
-_Do not_ work off staging branches.
-_Always_ work off feature branches, not staged feature branches.
-_Always_ rebase to the branch you want to merge to (`git checkout -b stage-1-feature-x` `git rebase stage-1` `git checkout stage-1` `git merge stage-1-feature-x --no-ff`)
-_Only_ merge QA'd/authorised staging branches to master.
+ - _Do not_ work off master branch.
+ - _Do not_ work off staging branches.
+ - _Always_ work off feature branches, not staged feature branches.
+ - _Always_ rebase to the branch you want to merge to (`git checkout -b stage-1-feature-x` `git rebase stage-1` `git checkout stage-1` `git merge stage-1-feature-x --no-ff`)
+ - _Only_ merge QA'd/authorised staging branches to master.
 
-_Stage branches_ can be re-created (or reset).
-Once a stage branch is merged into master then the _feature branches_ are immutable (finalized) and the original feature branches (non-rebased) should be 
+ - _Stage branches_ can be re-created (or reset).
+ - Once a stage branch is merged into master then the _feature branches_ are immutable (finalized) and the original feature branches (non-rebased) should be 
 removed as shown above.
 
-Feature branches prefixed with author name should be not be touched by anyone except the author as they wish to change the history as they please.
+ - Feature branches prefixed with author name should be not be touched by anyone except the author as they wish to change the history as they please.
 
-You should remove the history of any staging branches to keep a clean history. Such as changing the merge commit messages like the following:
+ - You should remove the history of any staging branches to keep a clean history. Such as changing the merge commit messages like the following:
 
-"Merge branch 'feature-x' into master"
-instead of
-"Merge branch 'stage-n-feature-x' into 'stage-n"
+    "Merge branch 'feature-x' into master"
+    instead of
+    "Merge branch 'stage-n-feature-x' into 'stage-n"
 
-Therefore when you fast-forward merge master into stage-n it will appear that each feature was actually merged into master and the use of staging branches is hidden.
+ - Therefore when you fast-forward merge master into stage-n it will appear that each feature was actually merged into master and the use of staging branches is hidden.
 
-As discussed, if you cannot fast-forward merge master into stage-n then you'd have to rebase/reset/recreate the stage-n onto latest master. This will only occur if you 
+ - As discussed, if you cannot fast-forward merge master into stage-n then you'd have to rebase/reset/recreate the stage-n onto latest master. This will only occur if you 
 create stage-1 then stage-2 then stage-2 gets merged in before stage-1 and stage-1 has to be updated.
 
 Disclaimer
