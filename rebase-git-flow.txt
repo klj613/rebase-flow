@@ -46,11 +46,11 @@ Creating a staging branch
 `git checkout -b stage-1-feature-x`
 `git rebase stage-1`
 `git checkout stage-1`
-`git merge stage-1-feature-x --no-ff`
+`git merge stage-1-feature-x --no-ff -m "Merge branch 'feature-x' into master"`
 
 Note: since feature-x is already on latest master, stage-1-feature-x and feature-x will be on the same commit (fast-forward)
 
-   * stage-1 - Merge branch 'stage-1-feature-x' into stage-1
+   * stage-1 - Merge branch 'feature-x' into master
    |  \
    |   * feature-x stage-1-feature-x       * feature-y
    |   *                                   *
@@ -67,9 +67,9 @@ Staging feature-y with feature-x
 `git checkout -b stage-1-feature-y`
 `git rebase stage-1`
 `git checkout stage-1`
-`git merge stage-1-feature-y --no-ff`
+`git merge stage-1-feature-y --no-ff -m "Merge branch 'feature-y' into master"`
 
-   * stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+   * stage-1 - Merge branch 'feature-y' into master
    |  \
    |   *' stage-1-feature-y
    |   *'
@@ -77,7 +77,7 @@ Staging feature-y with feature-x
    |   *'
    |   *'
    |  /
-   * Merge branch 'stage-1-feature-x' into stage-1
+   * Merge branch 'feature-x' into master
    |  \
    |   * feature-x stage-1-feature-x       * feature-y
    |   *                                   *
@@ -93,7 +93,7 @@ Stage passed QA. Fastforward merge to master
 `git checkout master`
 `git merge stage-1`
 
- * master stage-1 - Merge branch 'stage-1-feature-y' into stage-1
+ * master stage-1 - Merge branch 'feature-y' into master
  |  \
  |   *' stage-1-feature-y
  |   *'
@@ -101,7 +101,7 @@ Stage passed QA. Fastforward merge to master
  |   *'
  |   *'
  |  /
- * Merge branch 'stage-1-feature-x' into stage-1
+ * Merge branch 'feature-x' into master
  |  \
  |   * feature-x stage-1-feature-x       * feature-y
  |   *                                   *
@@ -120,29 +120,6 @@ Cleanup feature branches
 `git branch -D feature-y` (feature-y is not within branch master so have to use -D. However stage-1-feature-y is in master)
 `git branch -d stage-1-feature-x`
 `git branch -d stage-1-feature-y`
-
- * master - Merge branch 'stage-1-feature-y' into stage-1
- |  \
- |   *' 
- |   *'
- |   *' [solved conflict here]
- |   *'
- |   *'
- |  /
- * Merge branch 'stage-1-feature-x' into stage-1
- |  \
- |   *
- |   *
- |   *
- |   *
- |   *
- |  /
- *
-
-Cleanup feature branches - Correct merge messages
--------------------------------------------------
-
-Use rebase, or use manual commit messages earlier in the merging process.
 
  * master - Merge branch 'feature-y' into master
  |  \
