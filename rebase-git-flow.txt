@@ -91,7 +91,7 @@ Stage passed QA. Fastforward merge to master
 --------------------------------------------
 
 `git checkout master`
-`git merge stage-1`
+`git merge stage-1 --ff-only`
 
  * master stage-1 - Merge branch 'feature-y' into master
  |  \
